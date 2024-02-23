@@ -49,6 +49,15 @@ lives_text = font.render("Lives: " + str(player_lives), True, GREEN, DARK_GREEN)
 lives_rect = lives_text.get_rect()
 lives_rect.topright = (WINDOW_WIDTH, 0)
 
+game_over_text = font.render("Game Over", True, GREEN, DARK_GREEN)
+game_over_rect = game_over_text.get_rect()
+game_over_rect.center = (WINDOW_WIDTH // 2, WINDOW_HEIGHT, 2)
+
+
+continue_text = font.render("Press any key to play again", True, GREEN, DARK_GREEN)
+continue_rect = continue_text.get_rect()
+continue_rect.center = (WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 + 32)
+
 # Load character images
 
 dragon_image = pg.image.load("./assets/dragon_right.png")
