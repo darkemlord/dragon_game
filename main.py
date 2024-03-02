@@ -1,4 +1,5 @@
 import pygame as pg
+import random
 
 # Init Pygame
 pg.init()
@@ -48,7 +49,7 @@ lives_rect.topright = (WINDOW_WIDTH, 0)
 
 game_over_text = font.render("Game Over", True, GREEN, DARK_GREEN)
 game_over_rect = game_over_text.get_rect()
-game_over_rect.center = (WINDOW_WIDTH // 2, WINDOW_HEIGHT, 2)
+game_over_rect.center = (WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2)
 
 
 continue_text = font.render("Press any key to play again", True, GREEN, DARK_GREEN)
@@ -58,11 +59,13 @@ continue_rect.center = (WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 + 32)
 # Load character images
 dragon_image = pg.image.load("./assets/dragon_right.png")
 dragon_rect = dragon_image.get_rect()
-dragon_rect.topleft = (25, 25)
+dragon_rect.left = 32
+dragon_rect.centery = WINDOW_HEIGHT // 2
 
 coin_image = pg.image.load("./assets/coin.png")
 coin_rect = coin_image.get_rect()
-coin_rect.topright = (25, 25)
+coin_rect.x = WINDOW_WIDTH + BUFFER_DISTANCE
+coin_rect.y = random.randint(64, WINDOW_HEIGHT - 32)
 
 # Load sound effects
 coin_sound = pg.mixer.Sound("./assets/coin_sound.wav")
@@ -85,6 +88,7 @@ while running:
     display_surface.blit(title_text, title_rect)
     display_surface.blit(lives_text, lives_rect)
     display_surface.blit(score_text, score_rect)
+    pg.draw.line(display_surface, WHITE, (0, 64), (WINDOW_WIDTH, 64), 2)
 
     # Display Characters
     display_surface.blit(dragon_image, dragon_rect)
