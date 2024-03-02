@@ -4,7 +4,6 @@ import pygame as pg
 pg.init()
 
 # Display Surface
-
 WINDOW_WIDTH = 1000
 WINDOW_HEIGHT = 400
 display_surface = pg.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
@@ -33,9 +32,7 @@ BLACK = (0, 0, 0)
 # Set fonts
 font = pg.font.Font("./assets/AttackGraffiti.ttf", 32)
 
-
 # Set text
-
 score_text = font.render("Score: " + str(score), True, GREEN, DARK_GREEN)
 score_rect = score_text.get_rect()
 score_rect.topleft = (10, 10)
@@ -59,17 +56,22 @@ continue_rect = continue_text.get_rect()
 continue_rect.center = (WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 + 32)
 
 # Load character images
-
 dragon_image = pg.image.load("./assets/dragon_right.png")
 dragon_rect = dragon_image.get_rect()
 dragon_rect.topleft = (25, 25)
-
 
 coin_image = pg.image.load("./assets/coin.png")
 coin_rect = coin_image.get_rect()
 coin_rect.topright = (25, 25)
 
 # Load sound effects
+coin_sound = pg.mixer.Sound("./assets/coin_sound.wav")
+miss_sound = pg.mixer.Sound("./assets/miss_sound.wav")
+miss_sound.set_volume(1)
+pg.mixer.music.load("./assets/ftd_background_music.wav")
+
+# Set images
+
 # Main loop game
 running = True
 
