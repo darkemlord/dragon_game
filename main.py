@@ -76,12 +76,34 @@ pg.mixer.music.load("./assets/ftd_background_music.wav")
 # Set images
 
 # Main loop game
+pg.mixer.music.play(-1, 0.0)
 running = True
 
 while running:
     for event in pg.event.get():
         if event.type == pg.QUIT:
             running = False
+
+    # Check to see if the user wants to move
+    keys = pg.key.get_pressed()
+    if keys[pg.K_UP] and dragon_rect.top > 64:
+        dragon_rect.y -= PLAYER_VELOCITY
+    if keys[pg.K_DOWN] and dragon_rect.bottom < WINDOW_HEIGHT:
+        dragon_rect.y += PLAYER_VELOCITY
+
+    # Move the coin
+    if coin_rect.x < 0:
+        # player miss the coin
+        player_lives -= 1
+        miss_sound.play()
+        coin_rect.x = WINDOW_WIDTH + BUFFER_DISTANCE
+        continue_rect.y = random.randint(64, WINDOW_WIDTH - 32)
+    else:
+        # Move coin
+        coin_rect.x -= coin_velocity
+
+    # Fill surface and remove duplicated images
+    display_surface.fill(BLACK)
 
     # Display text items
     display_surface.blit(score_text, score_rect)
