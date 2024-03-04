@@ -97,11 +97,46 @@ while running:
         player_lives -= 1
         miss_sound.play()
         coin_rect.x = WINDOW_WIDTH + BUFFER_DISTANCE
-        continue_rect.y = random.randint(64, WINDOW_WIDTH - 32)
+        coin_rect.y = random.randint(64, WINDOW_HEIGHT - 32)
     else:
         # Move coin
         coin_rect.x -= coin_velocity
 
+    # Check for collision
+    if dragon_rect.colliderect(coin_rect):
+        score += 1
+        coin_sound.play()
+        coin_velocity += COIN_ACCELERATION
+        coin_rect.x = WINDOW_WIDTH + BUFFER_DISTANCE
+        coin_rect.y = random.randint(64, WINDOW_HEIGHT - 32)
+
+    # Update HUD
+    score_text = font.render("Score: " + str(score), True, GREEN, DARK_GREEN)
+    lives_text = font.render("Lives: " + str(player_lives), True, GREEN, DARK_GREEN)
+
+    # Check for game over
+    if player_lives == 0:
+        display_surface.blit(game_over_text, game_over_rect)
+        display_surface.blit(continue_text, continue_rect)
+        pg.display.update()
+
+        # Pause the game until player presses a key, the reset game
+        pg.mixer.music.stop()
+        is_paused = True
+        while is_paused:
+            for event in pg.event.get():
+                # The player wants to play again
+                if event.type == pg.KEYDOWN:
+                    score = 0
+                    player_lives = PLAYER_STARTING_LIVES
+                    dragon_rect.y = WINDOW_HEIGHT // 2
+                    coin_velocity = COIN_STARTING_VELOCITY
+                    pg.mixer.music.play(-1, 0.0)
+                    is_paused = False
+                # The player wants to quit
+                if event.type == pg.QUIT:
+                    is_paused = False
+                    running = False
     # Fill surface and remove duplicated images
     display_surface.fill(BLACK)
 
