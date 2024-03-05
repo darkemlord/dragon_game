@@ -73,8 +73,6 @@ miss_sound = pg.mixer.Sound("./assets/miss_sound.wav")
 miss_sound.set_volume(1)
 pg.mixer.music.load("./assets/ftd_background_music.wav")
 
-# Set images
-
 # Main loop game
 pg.mixer.music.play(-1, 0.0)
 running = True
